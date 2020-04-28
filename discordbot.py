@@ -1,474 +1,184 @@
-from discord.ext import commands
-from discord.ext import tasks
-import os
-import traceback
 import discord
-from datetime import datetime 
+import asyncio
+import random
+import os
 
-token = os.environ['DISCORD_BOT_TOKEN']
-CHANNEL_ID =698653628176531478  #チャンネルID
 
-# 接続に必要なオブジェクトを生成
+
 client = discord.Client()
+
+ #トークン
+token = os.environ['DISCORD_BOT_TOKEN']
+
 
 @client.event
 async def on_ready():
-    """起動時に通知してくれる処理"""
-    print('ログインしました')
-    print(client.user.name)  # ボットの名前
-    print(client.user.id)  # ボットのID
-    print(discord.__version__)  # discord.pyのバージョン
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
     print('------')
 
+@client.event
+async def on_message(message):
+    if message.content.startswith("/tip bgpt 200 @🎮BGPT-GAMES"):
 
-# 60秒に一回ループ
-@tasks.loop(seconds=60)
-async def loop():
-    # 現在の時刻
-    now = datetime.now().strftime('%H:%M')
-    
-    if now == '00:25':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('How are UZURAS<:uzu:699374038220538006>BOT doing today?<:uzu2:700858786960900117>.....<:uzu1:700858878879072303>‼') 
-    
-    if now == '00:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@everyone Mornin!Rain☔ is 1min later.<:good01:699581068285706301>51120671>')  
-    
-    if now == '00:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 200 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:JPYNdisco:698471276498649168>')  
+      if client.user != message.author:
+       path=r"https://res.cloudinary.com/markbasser/image/upload/v1588046170/bgptgames/top"
+       m = "【!bgpt】:point_left::point_left:Now enter this Command!```!bgpt```:point_up_2:このｺﾏﾝﾄﾞ“!bgpt”入力\n☑_Click on the hidden **BlackText** to see the result._\n☑_**黒塗**に結果_\n\n**BGPT GAMES NOW!**"+message.author.mention
 
-    if now == '00:31':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 777 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:BGPT02:698471366004965406> ')
 
-    if now == '00:32':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 300 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:benkeicoinsl:698471387064696833>')
+       dirs = os.listdir( path )
+       file = random.choice(dirs)
+       image = image = path + "\\" + file
 
-    if now == '00:33':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 250 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:JPYNdisco:698471276498649168>')  
-  
-    if now == '00:34':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 222 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:JPYNdisco:698471276498649168>')  
-    
-    if now == '00:35':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 777 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:BGPT02:698471366004965406> ')
+       await message.channel.send(m,file=discord.File(image))
 
-    if now == '00:37':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 333 ActiveUserOnly  <:good01:699581068285706301><:gm:699792760651120671><:benkeicoinsl:698471387064696833>')
+       def check(m): #メッセージ内容をチェックする
+            return m.content == "!bgpt" and m.author.id == message.author.id
 
-    if now == '00:38':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:heart02:699580174911668225>Okay,later👋')     
 
-    if now == '01:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@everyone <:heart02:699580174911668225>are you ready Okay')     
+       msg = await client.wait_for('message', check=check) 
 
-    if now == '01:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw JPYN 60 3 EquallyDistributed  <:good01:699581068285706301><:JPYNdisco:698471276498649168>⚾Plz receive→/catch')
-    
-    if now == '01:31':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BGPT 777 4 AttenuationDistributed  <:BGPT02:698471366004965406><:good:699580636448423936>⚾Plz receive→/catch')
-    
-    if now == '01:32':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BEN 100 4 AttenuationDistributed  <:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833>⚾Plz receive→/catch')
-    
-    if now == '01:38':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good01:699581068285706301> Okay,later👋')  
-    
-    if now == '01:59':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 77.7 ActiveUserOnly  <:good01:699581068285706301>🌈 <:benkeicoinsl:698471387064696833> ')  
-        
-    if now == '02:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 10 ActiveUserOnly  🌈 <:JPYNdisco:698471276498649168> ')
-        
-    if now == '02:58':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767349828714606/hg.png ')    
-
-    if now == '02:59':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:suika_paku:699072728153587782> Im hungry!I want to eat meat🍖🍗29coin?!')    
-     
-    if now == '03:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw 29coin 29292.929 5 EquallyDistributed   🍖🍗Plz receive→/catch<:hai_kao:699072592987947117>29meat🍖🍗')
-
-    if now == '03:13':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:guru:699579775500681246>💦I’m so full that I can’t breathe.🍖🍗!Sorry....ww')
-        
-    if now == '03:14':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('Plz.<:kanngaeru:699072662382837881> give me?【/tip 29coin *** @🌈Rains☔ 】Tip🍖')
-        
-    if now == '03:15':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good01:699581068285706301> ☑🥩29coin tip please. If you tip 29coins of 10000 or 100000, in return, I will tip JPNY COIN for a while!【/tip 29coin <@700176826282147851>】') 
-        
-    if now == '03:25':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767323304067133/hty.png ') 
-
-    if now == '03:26':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good:699580636448423936>Thank you! for the MeatCoin🥩29coin<:ty:699857337980026930>Tip! Will eat later.🍖')      
-        
-    if now == '03:27':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain KENJ 50 ActiveUserOnly  ☔<:kenj:700136543003607101>')     
-        
-    if now == '03:28':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://cdn.discordapp.com/attachments/701765831268368474/701767123252543498/iku.png')     
-         
-    if now == '03:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@everyone <:hello:699779689127870514> Rain☔ is 1min later.<:good01:699581068285706301>✨')   
-        
-    if now == '03:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 1000 ActiveUserOnly  🌈 <:BGPT02:698471366004965406>') 
-    
-    if now == '03:32':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 777.77 ActiveUserOnly  🌈 <:BENKEICOIN04:698471407650209832> ')  
-
-    if now == '03:34':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 333.3 ActiveUserOnly  🌈 <:JPYNdisco:698471276498649168> ')    
-    
-    if now == '03:36':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain KENJ 1111.11 ActiveUserOnly  ☔<:kenj:700136543003607101>') 
-            
-    if now == '03:38':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw JPYN 400 8 EquallyDistributed  <:JPYNdisco:698471276498649168><:JPYNdisco:698471276498649168><:JPYNdisco:698471276498649168>Pls receive→/catch')
-    
-    if now == '03:40':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BGPT 1200 8 EquallyDistributed  <:good01:699581068285706301><:BGPT02:698471366004965406><:BGPT02:698471366004965406><:BGPT02:698471366004965406>Pls receive→/catch')
-    
-    if now == '03:42':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BEN 200 8 AttenuationDistributed  <:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833>⚾Plz receive→/catch')
-      
-    if now == '03:44':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767323304067133/hty.png') 
-          
-    if now == '03:45':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:bye:699863270802325604>See you!またね👋')  
-        
-    if now == '04:31':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701775150743289956/migi.png ') 
-        
-    if now == '04:37':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@here 👆/catch<:kaokanga:699072678614663210>? See you later!') 
-
-    if now == '04:40':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 10 ActiveUserOnly  🌈 <:JPYNdisco:698471276498649168> ')   
-        
-    if now == '05:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 20 ActiveUserOnly  <:rain:699585875687899247><:JPYNdisco:698471276498649168><:hello:699779689127870514>')
-    
-    if now == '05:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain kenj 200 ActiveUserOnly  ☔<:kenj:700136543003607101>')
-        
-    if now == '05:31':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://cdn.discordapp.com/attachments/701765831268368474/701767323304067133/hty.png ')    
-        
-    if now == '06:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 30 ActiveUserOnly  <:rain:699585875687899247><:JPYNdisco:698471276498649168><:hello:699779689127870514>')
-    
-    if now == '06:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 77.7 ActiveUserOnly  <:rain:699585875687899247><:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833>')   
-   
-    if now == '07:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 30 ActiveUserOnly  <:rain:699585875687899247><:JPYNdisco:698471276498649168> ')
-  
-    if now == '07:20':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:cafe:699769671234355230>Good morning 🌎everyone.<:gm:699792760651120671>Have a nice day today! [omikuji] or [fortune] ← for today is fortune🔮Command')
-
-    if now == '07:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 77.7 ActiveUserOnly  <:good01:699581068285706301><:rain:699585875687899247><:BGPT02:698471366004965406> ') 
-
-    if now == '08:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 35 ActiveUserOnly  <:rain:699585875687899247><:JPYNdisco:698471276498649168><:hello:699779689127870514>')
-     
-    if now == '08:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:suika_paku:699072728153587782> hungry! I want to eat meat again! Meat🥩, meat🍖, meat!🍗肉29coin?!hehe')    
-    
-    if now == '08:31':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw 29coin 146460 5 EquallyDistributed   🍖meat!meat!🍗Plz receive→/catch<:hai_kao:699072592987947117>29meat!肉！🥩')
-
-    if now == '08:45':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('🥴💦Tummy full. ate too much. The meat is gone!🥩🥩🥩!Sorry..hehe..ww')
-        
-    if now == '08:46':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('Plz.<:kanngaeru:699072662382837881>I am hungry again, so give me 【/tip 29coin *** @🌈Rains☔ 】[meatcoin]Tip🍖')
-    
-    if now == '08:47':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good01:699581068285706301> ☑🥩29coin tip please. If you tip 29coins of 10000 or 100000, in return, I will tip JPNY COIN for a while!【/tip 29coin <@700176826282147851>】')
-      
-    if now == '09:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767323304067133/hty.png ')
-
-    if now == '09:25':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good:699580636448423936>Thank you!for the MeatCoin(29coin)Tip! I will eat meat again tomorrow.🍖<:ty:699857337980026930>')
-        
-    if now == '09:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 40 ActiveUserOnly  <:good01:699581068285706301><:rain:699585875687899247><:JPYNdisco:698471276498649168> ')
-   
-    if now == '09:55':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:niko_shita:699072695823892561>Plz.Meat.Meat.beef?pork?chicken?mutton?29Tip🍖')
-
-    if now == '09:57':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767349828714606/hg.png ') 
-        
-    if now == '10:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:aloha:699581550777597992>Hello,how are you❓ ') 
-        
-    if now == '10:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@here <:suika_paku:699072728153587782>After 2min, I”ll ☔Rain a little... ') 
-     
-    if now == '10:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767123252543498/iku.png') 
-    
-    if now == '10:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 150 ActiveUserOnly  <:good01:699581068285706301><:rain:699585875687899247><:BGPT02:698471366004965406>') 
-     
-    if now == '10:32':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BEN 300 6 EquallyDistributed  <:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833>⚾Plz receive→/catch')
-    
-    if now == '10:33':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw JPYN 120 6 EquallyDistributed  <:good01:699581068285706301><:JPYNdisco:698471276498649168> ⚾Plz receive☞/catch')  
-
-    if now == '10:34':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BGPT 1200 8 EquallyDistributed  <:good01:699581068285706301><:BGPT02:698471366004965406><:BGPT02:698471366004965406><:BGPT02:698471366004965406>Plz receive→/catch')
-    
-    if now == '10:35':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:cya:699859096794562650>👆/catch') 
-        
-    if now == '10:36':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://cdn.discordapp.com/attachments/701765831268368474/701767323304067133/hty.png ')          
-      
-    if now == '11:24':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('👆/catch? <:heart02:699580174911668225>See you sometimes!<:star1:699582964853375018>')    
-        
-    if now == '11:25':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain kenj 200 ActiveUserOnly  ☔<:kenj:700136543003607101><:sangras01:699579409220370514>')
-        
-    if now == '11:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('How are UZURAS Wallet doing Now～!?　<:uzu2:700858786960900117>...⚡...<:uzu1:700858878879072303>‼Sorry!') 
-    
-    if now == '12:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@everyone <:hello:699779689127870514>Rain<:rain:699585875687899247>is 1min later.<:good01:699581068285706301>')  
-
-    if now == '12:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 200 ActiveUserOnly  <:rain:699585875687899247><:JPYNdisco:698471276498649168> ')
-
-    if now == '12:32':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 777.77 ActiveUserOnly  <:rain:699585875687899247><:BGPT02:698471366004965406>')
-
-    if now == '12:34':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 500 ActiveUserOnly  <:rain:699585875687899247><:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833> ')
-
-    if now == '12:37':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw JPYN 120 4 EquallyDistributed  <:JPYNdisco:698471276498649168> ⚾Plz receive☞/catch') 
-    
-    if now == '12:38':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good01:699581068285706301><:cya:699859096794562650> ') 
-    
-    if now == '12:39':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:good01:699581068285706301> ☑🥩29coin tip please. If you tip 29coins of 10000 or 100000, in return, I will tip JPNY COIN for a while!【/tip 29coin <@700176826282147851>】I want to eat my meat🍖')
-      
-    if now == '13:14':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701775150743289956/migi.png ')    
-   
-    if now == '13:15':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@everyone 👆/catch ok?<:heart02:699580174911668225>see you!<:star1:699582964853375018>')  
-        
-    if now == '13:16':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701775150743289956/migi.png ')    
-        
-    if now == '13:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@here もうJapanでは深夜就寝前💤?ですよね。todayもあと少しだけRainします。Hello!Rain☔ is 1min later. ')       
-        
-    if now == '13:33':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701767349828714606/hg.png')
-    
-    if now == '13:34':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 300 ActiveUserOnly  <:rain:699585875687899247><:good:699580636448423936> <:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833> ')
-    
-    if now == '13:37':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 777.77 ActiveUserOnly  <:rain:699585875687899247><:BGPT02:698471366004965406>')
-    
-    if now == '13:40':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@here <:zzz:699581950356226058><:gn:699792795363311676> JapanのEveryoneはそろそろGoodNight！☔is 30min later👋 コロナには気を付けて！<:corona:699588627868418070>Watch out for corona!→ #┃covid-19🦠news ')       
+       kakuritu = random.randint(1,100)
+       if kakuritu>=98 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\1"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **ISo sorry！** ||  \n  --- ||    _**YOU LOST**_    ||---  \n || :skull_crossbones: 残念 **-200** BGPT ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=70 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\2"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **Sorry！**  ||\n  --- ||  _**You Lost**_  || --- \n ||:ghost: 残念 **-150** BGPT \n\n/tip bgpt 50 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=50 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\3"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **It's a shame！** || \n  --- || _ **You Lost**_  || --- \n ||:smiling_imp: 残念 **-100** BGPT \n\n/tip bgpt 100 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=30 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\4"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Even Fight！**  || \n  --- || _**Break Even!**_ || --- \n ||:smirk: **+-0** BGPT \n\n/tip bgpt 200 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=15 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\5"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations** :star2: ||  \n  --- || :star2: **You WIN** :star2: || --- \n || :smiley: **+100** BGPT \n\n/tip bgpt 300 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=10 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\6"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations** :star2:  ||  \n  --- || :dizzy::star2:**You WIN**:star2::dizzy: || --- \n || :dizzy::star_struck: ☆ **+500** BGPT ☆ \n\n/tip bgpt 700 {message.author.mention}  ||||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=7 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\7"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations!**:partying_face::tada: ||  \n  --- || :tada::star2::tada:**You Great Victory**:tada::star2::tada: ||--- \n || :tada::star2::tada: ☆☆ **+1000** BGPT ☆☆ \n\n/tip bgpt 1200 {message.author.mention}  ||||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=1 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\8"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations**:partying_face::tada: ||  \n  :partying_face:||:tada::star2::partying_face:**You Great Victory**:star2::partying_face::tada:||:partying_face:  \n  :partying_face:||:partying_face:☆☆☆ **+3000** BGPT ☆☆☆:partying_face:||:partying_face:||\n\n/tip bgpt 3200 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=0.4 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\9"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || :star2::tada::partying_face: **Congratulations!** :partying_face::tada::star2: ||   \n  --- :partying_face:||:tada::star2::tada:**☆You☆Great☆Victory☆**:tada::star2::tada:||:partying_face: --- \n  :partying_face:||:tada::star2::tada::partying_face::tada: ☆☆☆☆☆ **+7777.77** BGPT ☆☆☆☆☆:tada::partying_face::tada::star2::tada:||:partying_face: ||\n\n/tip bgpt 7977.77 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=40 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\10"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **For the time being！** || \n   --- ||    **You WON!**   || --- \n  :thinking: || 残念 **-200** || BGPT \n  :thinking: ||  ** 29coin :cut_of_meat: 29292.929 Get!** \n:meat_on_bone:  :cut_of_meat:\n\n/tip 29coin 29292.929 {message.author.mention}  || ")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=50 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\11"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **It's a shame！**  ||\n  --- ||   _**You Lost**_   || --- \n || :smiling_imp:  残念 **-200** BGPT || \n || **KenjCoin +50000 Get!** \n\n/tip kenj 50000 {message.author.mention}   ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=5 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\12"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **YOU Congratulations！**  ||\n  --- :star2::tada:** YOU WIN** :tada::star2: --- \n || :partying_face::tada::star2: **+77.77777 BEN** :star2::tada::partying_face: \n\n/tip BEN 77.77777 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=0.2 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\13"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || :star2::tada::partying_face: **Congratulations!** :partying_face::tada::star2: ||   \n   :partying_face:||:tada::star2::tada:**☆You☆Great☆Victory☆**:tada::star2::tada:||:partying_face:  \n  :partying_face::tada:||:star2::tada::star2::partying_face::tada: ☆☆☆☆☆ **+777.7777** BEN ☆☆☆☆☆ :tada::partying_face::star2::tada::star2:||:tada::partying_face: ||\n\n/tip BEN 7777.777 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=3 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\14"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  :smiling_imp:**OH MY GOD!**:smiling_imp:  ||\n  --- ||  _**You Lost**_  || --- \n  ||:ghost: 残念 :skull_crossbones:**--200** BGPT +93149.31:skull_crossbones:dappuncoin\n\n/tip dappuncoin 93149.31 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=30 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\15"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **ThankYou!**  ||\n  --- ||  _**Your🌈☔I**_  || --- \n ||Your Tip Rained:umbrella: into an active user. @everyone is grateful. Thank you! \n\n/rain BGPT 200 ActiveUserOnly {message.author.mention}  ||\n <:BGPT02:698471366004965406><:good01:699581068285706301>🌈☔It Rains")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=20 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\16"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **Thanks♡**  ||\n  --- ||  _**You Rain**_  || --- \n ||<:good01:699581068285706301> -200 BGPT→**400 JPYN** RAIN  \n\n /rain JPNY 50 ActiveUserOnly  || \n <:JPYNdisco:698471276498649168>🌈☔It Rains<:jhlo:700932650944299098>  ||")  # f文字列（フォーマット済み文字列リテラル）
        
-    if now == '13:41':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://cdn.discordapp.com/attachments/701765831268368474/701767323304067133/hty.png ')    
+       
+               
+       dirs = os.listdir( path )
+       file = random.choice(dirs)
+       image = image = path + "\\" + file
 
-    if now == '13:57':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:hai_kao:699072592987947117><:hai_kao:699072592987947117><:hai_kao:699072592987947117>   ')      
-        
-    if now == '14:10':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 10 ActiveUserOnly  <:good01:699581068285706301><:rain:699585875687899247><:JPYNdisco:698471276498649168><:gn:699792795363311676> ')  
+       await message.channel.send(message.author.mention,file=discord.File(image),delete_after=30.0)
 
-    if now == '14:13':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw JPYN 80 4 EquallyDistributed  <:JPYNdisco:698471276498649168> ⚾Plz receive→/catch') 
-   
-    if now == '14:15':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw BEN 310.8 4 EquallyDistributed  <:benkeicoinsl:698471387064696833>  ⚾Plz receive→/catch')      
-    
-    if now == '14:17':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/throw KENJ 800 4 EquallyDistributed  <:kenj:700136543003607101> ⚾Plz receive→/catch')
-        
-    if now == '14:19':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('<:bye:699863270802325604>See you! ') 
-        
-    if now == '15:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('@here 👆/catch?<:aloha:699581550777597992> ') 
-        
-    if now == '15:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 50 ActiveUserOnly  <:good01:699581068285706301><:BGPT02:698471366004965406> <:rain:699585875687899247><:gn:699792795363311676> ')
-  
-    if now == '15:40':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701775150743289956/migi.png ') 
 
-    if now == '16:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain kenj 50 ActiveUserOnly  ☔<:kenj:700136543003607101> ')
-        
-    if now == '16:55':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 77.7 ActiveUserOnly  <:rain:699585875687899247><:BGPT02:698471366004965406>')   
-        
-    if now == '17:40':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 10 ActiveUserOnly  <:good01:699581068285706301>🌈<:JPYNdisco:698471276498649168><:rain:699585875687899247>')
-    
-    if now == '18:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain kenj 50 ActiveUserOnly  ☔<:kenj:700136543003607101> ')
-        
-    if now == '18:47':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://media.discordapp.net/attachments/701765831268368474/701775150743289956/migi.png ') 
-    
-    if now == '19:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 5 ActiveUserOnly  <:BENKEICOIN04:698471407650209832><:good01:699581068285706301><:rain:699585875687899247> ')  
+@client.event
+async def on_message(message):
+    if message.content.startswith("/tip bgpt 200 <@703768008098709596>"):
 
-    if now == '20:40':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 5 ActiveUserOnly  🌈 <:JPYNdisco:698471276498649168> ') 
-          
-    if now == '21:29':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('https://cdn.discordapp.com/attachments/701765831268368474/701767349828714606/hg.png ')
+      if client.user != message.author:
+       path=r"https://res.cloudinary.com/markbasser/image/upload/v1588046170/bgptgames/top"
+       m = "【!bgpt】:point_left::point_left:Now enter this Command!```!bgpt```:point_up_2:このｺﾏﾝﾄﾞ“!bgpt”入力\n☑_Click on the hidden **BlackText** to see the result._\n☑_**黒塗**に結果_\n\n**BGPT GAMES NOW!**"+message.author.mention
 
-    if now == '21:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BGPT 50 ActiveUserOnly  <:good01:699581068285706301><:BGPT02:698471366004965406> <:rain:699585875687899247>')  
-        
-    if now == '22:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 20 ActiveUserOnly  <:good01:699581068285706301>🌈<:JPYNdisco:698471276498649168>HelloAll⭐')
-   
-    if now == '22:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('Dear japanese<:cafe:699769671234355230>Everyone🌟おはようございます!<:gm:699792760651120671> Have a nice day today！【おみくじ】←で運勢を')
 
-    if now == '23:00':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 20 ActiveUserOnly  <:good01:699581068285706301>🌈<:JPYNdisco:698471276498649168>HelloAll⭐')        
-    
-    if now == '23:30':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain BEN 50 ActiveUserOnly  <:good01:699581068285706301>🌈<:BENKEICOIN04:698471407650209832><:benkeicoinsl:698471387064696833> HelloAll⭐')
-    
-    if now == '23:58':
-        channel = client.get_channel(CHANNEL_ID)
-        await channel.send('/rain JPYN 20 ActiveUserOnly  <:good01:699581068285706301>🌈<:JPYNdisco:698471276498649168>HelloAll⭐')
-  
+       dirs = os.listdir( path )
+       file = random.choice(dirs)
+       image = image = path + "\\" + file
 
-#ループ処理実行
-loop.start()
-# Botの起動とDiscordサーバーへの接続
+       await message.channel.send(m,file=discord.File(image))
+
+       def check(m): #メッセージ内容をチェックする
+            return m.content == "!bgpt" and m.author.id == message.author.id
+
+
+       msg = await client.wait_for('message', check=check) 
+
+       kakuritu = random.randint(1,100)
+       if kakuritu>=98 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\1"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **ISo sorry！** ||  \n  --- ||    _**YOU LOST**_    ||---  \n || :skull_crossbones: 残念 **-200** BGPT ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=70 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\2"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **Sorry！**  ||\n  --- ||  _**You Lost**_  || --- \n ||:ghost: 残念 **-150** BGPT \n\n/tip bgpt 50 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=50 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\3"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **It's a shame！** || \n  --- || _ **You Lost**_  || --- \n ||:smiling_imp: 残念 **-100** BGPT \n\n/tip bgpt 100 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=30 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\4"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Even Fight！**  || \n  --- || _**Break Even!**_ || --- \n ||:smirk: **+-0** BGPT \n\n/tip bgpt 200 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=15 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\5"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations** :star2: ||  \n  --- || :star2: **You WIN** :star2: || --- \n || :smiley: **+100** BGPT \n\n/tip bgpt 300 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=10 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\6"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations** :star2:  ||  \n  --- || :dizzy::star2:**You WIN**:star2::dizzy: || --- \n || :dizzy::star_struck: ☆ **+500** BGPT ☆ \n\n/tip bgpt 700 {message.author.mention}  ||||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=7 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\7"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations!**:partying_face::tada: ||  \n  --- || :tada::star2::tada:**You Great Victory**:tada::star2::tada: ||--- \n || :tada::star2::tada: ☆☆ **+1000** BGPT ☆☆ \n\n/tip bgpt 1200 {message.author.mention}  ||||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=1 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\8"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **Congratulations**:partying_face::tada: ||  \n  :partying_face:||:tada::star2::partying_face:**You Great Victory**:star2::partying_face::tada:||:partying_face:  \n  :partying_face:||:partying_face:☆☆☆ **+3000** BGPT ☆☆☆:partying_face:||:partying_face:||\n\n/tip bgpt 3200 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=0.4 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\9"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || :star2::tada::partying_face: **Congratulations!** :partying_face::tada::star2: ||   \n  --- :partying_face:||:tada::star2::tada:**☆You☆Great☆Victory☆**:tada::star2::tada:||:partying_face: --- \n  :partying_face:||:tada::star2::tada::partying_face::tada: ☆☆☆☆☆ **+7777.77** BGPT ☆☆☆☆☆:tada::partying_face::tada::star2::tada:||:partying_face: ||\n\n/tip bgpt 7977.77 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=40 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\10"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || **For the time being！** || \n   --- ||    **You WON!**   || --- \n  :thinking: || 残念 **-200** || BGPT \n  :thinking: ||  ** 29coin :cut_of_meat: 29292.929 Get!** \n:meat_on_bone:  :cut_of_meat:\n\n/tip 29coin 29292.929 {message.author.mention}  || ")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=50 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\11"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **It's a shame！**  ||\n  --- ||   _**You Lost**_   || --- \n || :smiling_imp:  残念 **-200** BGPT || \n || **KenjCoin +50000 Get!** \n\n/tip kenj 50000 {message.author.mention}   ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=5 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\12"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **YOU Congratulations！**  ||\n  --- :star2::tada:** YOU WIN** :tada::star2: --- \n || :partying_face::tada::star2: **+77.77777 BEN** :star2::tada::partying_face: \n\n/tip BEN 77.77777 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=0.2 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\13"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  || :star2::tada::partying_face: **Congratulations!** :partying_face::tada::star2: ||   \n   :partying_face:||:tada::star2::tada:**☆You☆Great☆Victory☆**:tada::star2::tada:||:partying_face:  \n  :partying_face::tada:||:star2::tada::star2::partying_face::tada: ☆☆☆☆☆ **+777.7777** BEN ☆☆☆☆☆ :tada::partying_face::star2::tada::star2:||:tada::partying_face: ||\n\n/tip BEN 7777.777 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=3 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\14"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  :smiling_imp:**OH MY GOD!**:smiling_imp:  ||\n  --- ||  _**You Lost**_  || --- \n  ||:ghost: 残念 :skull_crossbones:**--200** BGPT +93149.31:skull_crossbones:dappuncoin\n\n/tip dappuncoin 93149.31 {message.author.mention}  ||")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=30 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\15"
+                await message.channel.send(f"**<:BGPT02:698471366004965406> 200_BGPT(Max BET)_**  \n:white_check_mark:  ||  **ThankYou!**  ||\n  --- ||  _**Your🌈☔I**_  || --- \n ||Your Tip Rained:umbrella: into an active user. @everyone is grateful. Thank you! \n\n/rain BGPT 200 ActiveUserOnly {message.author.mention}  ||\n <:BGPT02:698471366004965406><:good01:699581068285706301>🌈☔It Rains")  # f文字列（フォーマット済み文字列リテラル）
+       elif kakuritu>=20 :
+                path=r"C:\Users\MAKOTO\Desktop\BGPT-SLOT\tuika\16"
+
+       
+               
+       dirs = os.listdir( path )
+       file = random.choice(dirs)
+       image = image = path + "\\" + file
+
+       await message.channel.send(message.author.mention,file=discord.File(image),delete_after=30.0)
+
+
+
+
 client.run(token)
+
+
